@@ -1,18 +1,24 @@
 // 手動補登：沒有用 App 計數（例如用手錶數的、或家人口頭告知）時，直接輸入數字。
 
 import { useState } from 'react'
+import { DateTimeInput } from '../components/DateTimeInput'
 import { Page } from '../components/Layout'
 import { RecordFields, type RecordFieldValues } from '../components/RecordFields'
 import { Button, Field, INPUT_CLASS, Section, Sheet } from '../components/ui'
 import { isImplausible } from '../lib/alerts'
-import { toLocalInputValue } from '../lib/dates'
+import { checkDateTimeParts, toDateTimeParts, type DateTimeParts } from '../lib/dates'
 import { addBreath, useSettings } from '../lib/db'
+import { useNow } from '../lib/hooks'
 import { navigate } from '../lib/router'
+
+const FUTURE_MESSAGE = '這個時間還沒到。測量時間不能是未來，請確認日期和時間。'
 
 export function ManualScreen() {
   const settings = useSettings()
   const [rate, setRate] = useState('')
-  const [when, setWhen] = useState(() => toLocalInputValue(new Date()))
+  // 測量的日期和時間：預設是現在，可以直接打數字改
+  const [when, setWhen] = useState<DateTimeParts>(() => toDateTimeParts(new Date()))
+  const now = useNow()
   const [fields, setFields] = useState<RecordFieldValues>({ state: null, signs: [], note: '' })
   const [error, setError] = useState('')
   const [oddOpen, setOddOpen] = useState(false)
@@ -24,17 +30,18 @@ export function ManualScreen() {
 
   const save = async (skipOddCheck = false) => {
     const n = Number(rate)
-    const at = new Date(when)
     if (rate.trim() === '' || !Number.isInteger(n) || n < 1 || n > 300) {
       setError('請輸入每分鐘呼吸次數（整數）。')
       return
     }
-    if (Number.isNaN(at.getTime()) || at.getFullYear() < 2000) {
-      setError('請選擇測量的日期和時間（年份要填完整的四位數）。')
+    const checked = checkDateTimeParts(when)
+    if (!checked.ok) {
+      setError(checked.message)
       return
     }
+    const at = checked.date
     if (at.getTime() > Date.now() + 60_000) {
-      setError('測量時間不能是未來。')
+      setError(FUTURE_MESSAGE)
       return
     }
     if (!fields.state) {
@@ -78,15 +85,15 @@ export function ManualScreen() {
               onChange={(e) => setRate(e.target.value.replace(/[^\d]/g, ''))}
             />
           </Field>
-          <Field label="測量時間">
-            <input
-              className={INPUT_CLASS}
-              type="datetime-local"
-              value={when}
-              max={toLocalInputValue(new Date())}
-              onChange={(e) => setWhen(e.target.value)}
-            />
-          </Field>
+          <DateTimeInput
+            value={when}
+            onChange={(next) => {
+              setWhen(next)
+              setError('')
+            }}
+            now={now}
+            futureMessage={FUTURE_MESSAGE}
+          />
         </div>
       </Section>
 

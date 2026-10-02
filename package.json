@@ -1,7 +1,7 @@
 {
   "name": "carbon-breath",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Carbon 呼吸紀錄：在家記錄狗狗睡眠呼吸次數的 PWA",
   "type": "module",
   "scripts": {
