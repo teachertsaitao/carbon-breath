@@ -71,9 +71,12 @@ carbon-breath/
 ├── tsconfig.json
 ├── public/
 │   ├── manifest.json       App 名稱、圖示、顏色（加到主畫面時用）
-│   ├── icon.svg            圖示原始檔
-│   ├── icon-192.png
-│   └── icon-512.png
+│   ├── icon.svg            圖示原始檔（白底黑狗）
+│   ├── icon-192.png        一般用途的圖示（有圓角）
+│   ├── icon-512.png
+│   ├── icon-maskable-192.png  Android 主畫面用（滿版，手機自己切成圓形或圓角）
+│   ├── icon-maskable-512.png
+│   └── apple-touch-icon.png   iPhone 主畫面用（滿版、不透明，iPhone 自己切圓角）
 └── src/
     ├── main.tsx            程式進入點
     ├── App.tsx             決定現在顯示哪一頁
@@ -325,7 +328,7 @@ npm run preview  # 預覽打包後的結果
 - **Vite + React + TypeScript + Tailwind CSS + Dexie（IndexedDB）+ vite-plugin-pwa**，照原本規劃。
 - **圖表沒有用 Recharts，改成直接畫 SVG**：只有幾張簡單的圖，自己畫可以完全控制夜間配色和標示方式，App 體積小很多（離線快取的檔案更少）。每張圖都可以切換成表格。
 - **PDF 沒有用 jsPDF 之類的套件**：那些套件要顯示中文，得把一整套中文字型（好幾 MB）包進 App。現在的做法是用手機內建的字型把報告畫在 canvas 上，再用一個很小的程式（`src/lib/pdf.ts`，約 100 行）把圖片包成 PDF，App 幾乎沒有變大，離線也能用。
-- **Service worker 由 vite-plugin-pwa 產生**，沒有用手寫的 `sw.js`：Vite 打包後的檔名每次都不一樣（帶雜湊值），要由打包工具自動列出要快取的檔案，離線才會完整。圖示、`manifest.json`、iOS 的 meta 標籤、「有新版本可用」橫幅都還是照 pwa-icon-setup 的做法。
+- **Service worker 由 vite-plugin-pwa 產生**，沒有用手寫的 `sw.js`：Vite 打包後的檔名每次都不一樣（帶雜湊值），要由打包工具自動列出要快取的檔案，離線才會完整。圖示、`manifest.json`、iOS 的 meta 標籤、「有新版本可用」橫幅都還是照 pwa-icon-setup 的做法。唯一不同的是圖示多做了「滿版」的版本給主畫面用：白底的圖示如果四個角是透明的，iPhone 會把透明的地方填成黑色，角落可能出現黑邊。
 - **更新方式選「提示後才更新」**：新版下載好之後不會自己重新整理（怕數呼吸數到一半被打斷），要按「立即更新」才換版。
 - **字型**：數字和英文用隨 App 打包的 M PLUS Rounded 1c（只含拉丁字元，約 66 KB，SIL Open Font License），中文用手機內建字型。
 

@@ -1,30 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2B3036"/>
-      <stop offset="1" stop-color="#15171A"/>
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E7E9EB"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="96" fill="url(#bg)"/>
 
-  <!-- 計數錶盤：一圈 12 個點，亮起來的是已經數到的呼吸 -->
+  <!-- 計數錶盤：一圈 12 個點，深色的是已經數到的呼吸 -->
   <g>
-    <circle cx="256.0" cy="68.0" r="15" fill="#E6E8EA"/>
-    <circle cx="350.0" cy="93.2" r="15" fill="#E6E8EA"/>
-    <circle cx="418.8" cy="162.0" r="15" fill="#E6E8EA"/>
-    <circle cx="444.0" cy="256.0" r="15" fill="#E6E8EA"/>
-    <circle cx="418.8" cy="350.0" r="15" fill="#E6E8EA"/>
-    <circle cx="350.0" cy="418.8" r="15" fill="#E6E8EA"/>
-    <circle cx="256.0" cy="444.0" r="15" fill="#E6E8EA"/>
-    <circle cx="162.0" cy="418.8" r="15" fill="#E6E8EA"/>
-    <circle cx="93.2" cy="350.0" r="10" fill="#4B5159"/>
-    <circle cx="68.0" cy="256.0" r="10" fill="#4B5159"/>
-    <circle cx="93.2" cy="162.0" r="10" fill="#4B5159"/>
-    <circle cx="162.0" cy="93.2" r="10" fill="#4B5159"/>
+    <circle cx="256.0" cy="68.0" r="15" fill="#1B1E22"/>
+    <circle cx="350.0" cy="93.2" r="15" fill="#1B1E22"/>
+    <circle cx="418.8" cy="162.0" r="15" fill="#1B1E22"/>
+    <circle cx="444.0" cy="256.0" r="15" fill="#1B1E22"/>
+    <circle cx="418.8" cy="350.0" r="15" fill="#1B1E22"/>
+    <circle cx="350.0" cy="418.8" r="15" fill="#1B1E22"/>
+    <circle cx="256.0" cy="444.0" r="15" fill="#1B1E22"/>
+    <circle cx="162.0" cy="418.8" r="15" fill="#1B1E22"/>
+    <circle cx="93.2" cy="350.0" r="10" fill="#C2C7CD"/>
+    <circle cx="68.0" cy="256.0" r="10" fill="#C2C7CD"/>
+    <circle cx="93.2" cy="162.0" r="10" fill="#C2C7CD"/>
+    <circle cx="162.0" cy="93.2" r="10" fill="#C2C7CD"/>
   </g>
 
   <!-- 蜷著睡覺的博美 -->
-  <g fill="#E6E8EA" stroke="#E6E8EA" stroke-linejoin="round">
+  <g fill="#1B1E22" stroke="#1B1E22" stroke-linejoin="round">
     <!-- 蓬蓬的尾巴，蓋在背上 -->
     <circle cx="338" cy="246" r="44" stroke="none"/>
     <circle cx="374" cy="270" r="30" stroke="none"/>
@@ -39,7 +39,6 @@
     <circle cx="184" cy="290" r="58" stroke="none"/>
     <ellipse cx="146" cy="316" rx="34" ry="24" stroke="none"/>
   </g>
-  <!-- 閉著的眼睛、鼻子 -->
-  <path d="M170 284q15 12 31 1" fill="none" stroke="#1B1E22" stroke-width="7.5" stroke-linecap="round"/>
-  <ellipse cx="120" cy="310" rx="9.5" ry="7.5" fill="#1B1E22"/>
+  <!-- 閉著的眼睛 -->
+  <path d="M170 284q15 12 31 1" fill="none" stroke="#F4F5F6" stroke-width="7.5" stroke-linecap="round"/>
 </svg>
