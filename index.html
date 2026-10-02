@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Carbon 呼吸紀錄</title>
+    <meta name="description" content="記錄狗狗的睡眠呼吸次數、咳嗽、食慾與精神，回診時給獸醫看。" />
+
+    <link rel="icon" type="image/png" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#15171A" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="呼吸紀錄" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex" />
+
+    <!-- 在畫面出現之前就決定深色或淺色，避免半夜打開時先閃一下白畫面 -->
+    <script>
+      ;(function () {
+        var theme = 'light'
+        try {
+          var pref = localStorage.getItem('cb.theme') || 'auto'
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (pref === 'dark' || (pref === 'auto' && systemDark)) theme = 'dark'
+        } catch (e) {}
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
+    <style>
+      html { background: #f1f2f0; }
+      html[data-theme='dark'] { background: #15171a; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>這個 App 需要開啟 JavaScript 才能使用。</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

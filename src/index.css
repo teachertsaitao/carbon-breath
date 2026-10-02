@@ -1,0 +1,307 @@
+@import 'tailwindcss';
+
+/* 數字和英文用圓體（M PLUS Rounded 1c，只含拉丁字元的小檔案，隨 App 一起離線快取）；
+   中文用手機內建的字型。 */
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/m-plus-rounded-1c-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/m-plus-rounded-1c-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'M PLUS Rounded 1c';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/m-plus-rounded-1c-latin-700-normal.woff2') format('woff2');
+}
+
+/* ── 顏色 ─────────────────────────────────────────────
+   介面本身只用灰階（石墨色）；綠、黃、紅只用在「狀態」上，不拿來裝飾，
+   這樣一有顏色出現，就代表有事情要注意。
+   三組：淺色（白天）、深色、night（量呼吸流程專用，比深色更暗）。 */
+:root {
+  color-scheme: light;
+  --bg: #f1f2f0;
+  --surface: #ffffff;
+  --surface-2: #e5e7e4;
+  --line: #d3d6d2;
+  --fg: #1f2225;
+  --fg-2: #596067;
+  --fg-3: #858b92;
+  --primary: #1f2225;
+  --on-primary: #f4f5f3;
+
+  --ok: #17704a;
+  --ok-bg: #dff2e8;
+  --ok-fill: #2e9e6b;
+  --warn: #855600;
+  --warn-bg: #faefc8;
+  --warn-fill: #e0a516;
+  --danger: #b33023;
+  --danger-bg: #fadfdb;
+  --danger-fill: #cb4133;
+  --on-danger: #ffffff;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #15171a;
+  --surface: #1e2125;
+  --surface-2: #2a2e33;
+  --line: #363b41;
+  --fg: #e6e8ea;
+  --fg-2: #a7adb4;
+  --fg-3: #7b8189;
+  --primary: #e6e8ea;
+  --on-primary: #15171a;
+
+  --ok: #6fd0a3;
+  --ok-bg: #163126;
+  --ok-fill: #3fae7c;
+  --warn: #f0c552;
+  --warn-bg: #3a2f10;
+  --warn-fill: #e0ae2e;
+  --danger: #f79083;
+  --danger-bg: #421c18;
+  --danger-fill: #e05a4b;
+  --on-danger: #1a0d0b;
+}
+
+.night {
+  color-scheme: dark;
+  --bg: #090a0b;
+  --surface: #111315;
+  --surface-2: #1b1e21;
+  --line: #262a2e;
+  --fg: #a3a9af;
+  --fg-2: #7b8188;
+  --fg-3: #4e5359;
+  --primary: #9da3a9;
+  --on-primary: #090a0b;
+
+  --ok: #6fd0a3;
+  --ok-bg: #12261e;
+  --ok-fill: #3fae7c;
+  --warn: #f0c552;
+  --warn-bg: #2e260e;
+  --warn-fill: #e0ae2e;
+  --danger: #f79083;
+  --danger-bg: #371815;
+  --danger-fill: #e05a4b;
+  --on-danger: #1a0d0b;
+}
+
+@theme inline {
+  --font-sans:
+    'M PLUS Rounded 1c', system-ui, -apple-system, 'PingFang TC', 'Noto Sans TC', 'Noto Sans CJK TC',
+    'Microsoft JhengHei', sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-fill: var(--ok-fill);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-fill: var(--warn-fill);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-fill: var(--danger-fill);
+  --color-on-danger: var(--on-danger);
+}
+
+/* ── 基本樣式 ──────────────────────────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 16px;
+  line-height: 1.6;
+  overscroll-behavior-y: none;
+}
+
+button,
+a,
+[role='button'],
+label {
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+/* iPhone 從主畫面開啟時，畫面會延伸到狀態列底下、狀態列的字固定是白色，
+   所以在最上面墊一條深色，白天模式下時間和電量才看得到。 */
+.statusbar-strip {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: env(safe-area-inset-top, 0px);
+  background: #15171a;
+  z-index: 60;
+  pointer-events: none;
+}
+/* 量呼吸時整個畫面是最暗的夜間底色，這一條也跟著變暗 */
+:root[data-night] .statusbar-strip {
+  background: #090a0b;
+}
+
+/* 點擊區：不要選字、不要長按選單、不要雙擊放大 */
+.tap-surface {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: pointer;
+}
+
+/* ── 動畫 ─────────────────────────────────────────── */
+@keyframes cb-ripple {
+  from {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+}
+@keyframes cb-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes cb-sweep {
+  from {
+    stroke-dashoffset: var(--circ);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes cb-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes cb-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* 數完的那一刻整個畫面亮一下再暗回去：沒有聲音，但眼角餘光看得到 */
+@keyframes cb-finish-glow {
+  0% {
+    background-color: #3a3f45;
+  }
+  35% {
+    background-color: #3a3f45;
+  }
+  100% {
+    background-color: var(--bg);
+  }
+}
+
+.anim-ripple {
+  animation: cb-ripple 520ms ease-out forwards;
+}
+.anim-pop {
+  animation: cb-pop 180ms ease-out;
+}
+.anim-sheet-in {
+  animation: cb-sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.anim-fade-in {
+  animation: cb-fade-in 160ms ease-out;
+}
+.anim-finish-glow {
+  animation: cb-finish-glow 1600ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-ripple,
+  .anim-pop,
+  .anim-sheet-in,
+  .anim-fade-in {
+    animation: none;
+  }
+}
+
+/* ── 列印（回診報告）──────────────────────────────────
+   報告的每一頁是一張 A4 比例的圖片。列印時只印這些圖片，一張一頁，其他東西都藏起來。 */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+  }
+  .no-print,
+  .statusbar-strip {
+    display: none !important;
+  }
+  .report-screen {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .report-screen > section {
+    margin: 0 !important;
+  }
+  .report-pages {
+    display: block !important;
+    margin: 0 !important;
+  }
+  .report-page {
+    display: block;
+    /* 比整頁矮一點點，避免因為四捨五入多出一張空白頁 */
+    width: auto !important;
+    height: 296mm !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    break-after: page;
+    page-break-after: always;
+    break-inside: avoid;
+  }
+  .report-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}
